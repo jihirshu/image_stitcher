@@ -23,9 +23,9 @@ def main():
     camera_1_config = CameraStream(camera_params['camera_1'])
     camera_2_config = CameraStream(camera_params['camera_2'])
     camera_3_config = CameraStream(camera_params['camera_3'])
-    multi_image_stitcher = MultiImageStitcher(camera_1_config,
+    multi_image_stitcher = MultiImageStitcher(camera_3_config,
                                             camera_2_config,
-                                            camera_3_config,
+                                            camera_1_config,
                                             review_image_publisher.publish)
 
     image_sub1 = message_filters.Subscriber(image_1_topic, Image)
