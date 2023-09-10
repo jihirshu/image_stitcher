@@ -1,0 +1,53 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+orbs:
+  aws-s3: circleci/aws-s3@3.0
+
+workflows:
+  version: 1
+  normal-amd64:
+    jobs:
+      - build_noetic:
+          filters:
+            branches:
+              ignore:
+                - staging
+
+jobs:
+  build_noetic:
+    working_directory: ~/catkin_ws
+    docker:
+      - image: ros:noetic-ros-base
+    resource_class: large
+
+    steps:
+      - run: apt update
+      - run: apt install git -y
+      - run: apt install git-lfs -y
+      - run: apt install openssh-server -y
+      - run: git --version
+      - checkout:
+          path: ~/catkin_ws/src/image_stitcher
+      - run: pwd
+      - run: apt update
+      - run: apt install -y python3-catkin-tools python3-bloom
+      - run: apt install -y python3-pip python3-apt
+      - run: pip3 install -U setuptools
+      - run: pip3 install -U colcon-common-extensions colcon-ros-bundle
+      - run: pip3 install -U colcon-ros-bundle
+      - run: apt install -y python3-colcon-common-extensions libasio-dev
+      - run: cd ~/catkin_ws
+      - run:
+          name: Print current working directory
+          command: |
+            pwd
+      - run:
+          name: Install Deps
+          command: |
+            source /opt/ros/noetic/setup.sh       
+            rosdep install --from-path src --ignore-src -r -y
+      - run:
+          name: Catkin Build
+          command: |
+            source /opt/ros/noetic/setup.sh
+            catkin build
