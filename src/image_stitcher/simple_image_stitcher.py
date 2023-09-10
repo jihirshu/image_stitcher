@@ -6,6 +6,9 @@ from threading import Lock
 from image_stitcher.camera_stream import CameraStream
 
 class MultiImageStitcher:
+    '''
+    Class that merges camera streams. Assumes the first stream to be the left most image
+    '''
     def __init__(self, 
                 camera_stream_1: CameraStream, 
                 camera_stream_2: CameraStream, 
