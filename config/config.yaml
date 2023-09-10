@@ -1,0 +1,5 @@
+image_stitcher_node:
+  image_1_topic: /platypus/camera_1/dec/manual_white_balance
+  image_2_topic: /platypus/camera_2/dec/manual_white_balance
+  image_3_topic: /platypus/camera_3/dec/manual_white_balance
+  review_publish_topic: /review
