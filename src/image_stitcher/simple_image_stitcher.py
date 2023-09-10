@@ -19,9 +19,6 @@ class MultiImageStitcher:
         self.camera_stream_2 = camera_stream_2
         self.camera_stream_3 = camera_stream_3
         self.publish_review_image = publish_review_image
-        self.image1 = None
-        self.image2 = None
-        self.image3 = None
         self.lock = Lock()
         self.bridge = CvBridge()
         self.stitcher = cv2.createStitcher() if imutils.is_cv3() else cv2.Stitcher_create()
