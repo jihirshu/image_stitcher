@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="bag_file" default="$(find image_stitcher)/data/case_study.bag" />
+    <arg name="camera_json_path" default="$(find image_stitcher)/config/intrinsics_extrinsics.json"/>
+    <arg name="image_stitcher_yaml" default="$(find image_stitcher)/config/config.yaml"/>
+
+    <node pkg="rosbag" type="play" name="rosbag_play" output="screen" args="--clock --rate=1.0 -l $(arg bag_file)"
+        required="true" />
+
+    <rosparam command="load" file="$(arg image_stitcher_yaml)"/>
+    <node pkg="image_stitcher" type="image_stitcher_node.py" name="image_stitcher_node" respawn="true" output="screen">
+        <param name="camera_json_path" value="$(arg camera_json_path)" />
+    </node>
+
+</launch>
