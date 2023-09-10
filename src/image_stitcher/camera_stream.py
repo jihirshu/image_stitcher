@@ -28,8 +28,9 @@ class CameraStream:
         self.dist_coeffs = np.array([k1, k2, p1, p2, k3]) 
         self.x_shift = self.params['extrinsics']['pose']['translation']['x']
         self.y_shift = self.params['extrinsics']['pose']['translation']['y']
+        self.z_shift = self.params['extrinsics']['pose']['translation']['z']
 
     def translate_to_origin(self, image):
-        translation_matrix = np.float32([[1, 0, -self.x_shift], [0, 1, -self.y_shift]])
+        translation_matrix = np.float32([[1, 0, int((self.x_shift * self.focal_length))], [0, 1, int((self.z_shift*self.focal_length))]])
         img = cv2.warpAffine(image, translation_matrix, (image.shape[1], image.shape[0]))
         return img
